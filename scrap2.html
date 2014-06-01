@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+
+#bar{
+  width:500px;
+  height:50px;
+  background: gray;
+  position:relative;
+  border-radius: 3px;
+}
+
+#tab{
+  width:50px;
+  height:50px;
+  background-color:red;
+  position:absolute;
+  cursor:pointer;
+  margin-left:0px;
+}
+
+#info{
+  width:200px;
+  height:25px;
+}
+
+</style>
+
+
+
+<script type="text/javascript">
+var bar, tab;
+
+var test = [1,2,3,4,5]
+
+function init(){
+
+  bar = document.getElementById('bar');
+  tab = document.getElementById('tab');
+  info = document.getElementById('info');
+  bar.addEventListener('mousedown', startSlide, false);
+  bar.addEventListener('mouseup', stopSlide, false);
+}
+
+function startSlide(event){
+  var set_perc = (((((event.clientX-25) - bar.offsetLeft) / bar.offsetWidth)).toFixed(2));
+  info.innerHTML = 'start' + Math.round(set_perc/(1/test.length))
+  if ( ((set_perc * 100) < 100) && ((set_perc * 100) > 0) )   {
+  bar.addEventListener('mousemove', moveSlide, false);
+  tab.style.left = (set_perc * 100) + '%';};
+}
+
+function moveSlide(event){
+  var set_perc = (((((event.clientX-25) - bar.offsetLeft) / bar.offsetWidth)).toFixed(2));
+  info.innerHTML = 'moving : ' + Math.round(set_perc/(1/test.length))
+  if ( ((set_perc * 100) < 100) && ((set_perc * 100) > 0) ) {
+  tab.style.left = (set_perc * 100) + '%';};
+}
+
+function stopSlide(event){
+  var set_perc = (((((event.clientX - 25) - bar.offsetLeft) / bar.offsetWidth)).toFixed(2));
+  info.innerHTML = 'done : ' + Math.round(set_perc/(1/test.length))
+  bar.removeEventListener('mousemove', moveSlide, false);
+  tab.style.left = (set_perc * 100) + '%';
+}
+
+</script>
+
+</head>
+<body onload='init()'>
+
+<div id='bar'>
+<div id='tab'>
+
+</div>
+</div>
+<br />
+
+<div id='info'>info</div>
+
+</body>
+</html>

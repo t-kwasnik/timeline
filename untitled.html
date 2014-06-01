@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p id = "info"></p>
+<div id = "track">
+<div id = "slider" style ="height:40px;width:40px;background:black;"></div></div></div>
+
+<script>
+
+var info = document.getElementById("info")
+var track = document.getElementById("track")
+var slider = document.getElementById("slider")
+var leftMargin;
+
+track.addEventListener('mousedown', startMove);
+track.addEventListener('mouseup', endMove);
+
+function getLeftMargin (currentX, trackLOffset,sliderWidth, trackWidth) {
+  leftMarginPct = ((((currentX - trackLOffset) -  (sliderWidth / 2)) / trackWidth ) * 100 ).toFixed(3);
+  if (leftMarginPct > (100 - ((sliderWidth / trackWidth) * 100))) { leftMarginPct = 100 - ((sliderWidth / trackWidth) * 100)};
+  if (leftMarginPct < 0) { leftMarginPct = 0 };
+  return leftMarginPct;
+}
+
+function startMove (event) {
+  leftMargin = getLeftMargin(event.clientX, track.offsetLeft,slider.offsetWidth, track.offsetWidth);
+  info.innerHTML = leftMargin
+  track.addEventListener('mousemove', continueMove);
+  slider.style.margin = "0px " + leftMargin  + "%";
+}
+
+function continueMove (event) {
+  leftMargin = getLeftMargin(event.clientX, track.offsetLeft,slider.offsetWidth, track.offsetWidth);
+  info.innerHTML = leftMargin
+  slider.style.margin = "0px " + leftMargin  + "%";
+}
+
+function endMove (event) {
+  leftMargin = getLeftMargin(event.clientX, track.offsetLeft,slider.offsetWidth, track.offsetWidth);
+  track.removeEventListener('mousemove', continueMove);
+  slider.style.margin = "0px " + leftMargin  + "%";
+}
+
+info.innerHTML = leftMargin
+
+</script>
+
+</body>
+</html>

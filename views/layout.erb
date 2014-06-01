@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title >Timeline</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script>
+      function initialize() {
+        var slider_value = 0
+        points = <%= @points%>;
+        var center = <%= find_center(@points)%>;
+
+        map_canvas = document.getElementById('map_canvas');
+        map_options = {
+          center: new google.maps.LatLng(center[0],center[1]),
+          zoom: 2,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        map = new google.maps.Map(map_canvas, map_options)
+        marker = new google.maps.Marker({
+          position: new google.maps.LatLng(points[slider_value][0], points[slider_value][1]),
+          map: map,
+          title: 'Picture Location' });
+
+        image = document.getElementById('selected_image');
+        imageBase = 'images/';
+        imagePath = imageBase.concat(points[slider_value][2]);
+        image.src = imagePath;
+
+
+
+        var track = document.getElementById("track");
+        var slider = document.getElementById("slider");
+        var leftMargin;
+
+        track.addEventListener('mousedown', startMove);
+        track.addEventListener('mouseup', endMove);
+
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+        function getLeftMargin (currentX, trackLOffset,sliderWidth, trackWidth) {
+          leftMarginPct = ((((currentX - trackLOffset) -  (sliderWidth / 2)) / trackWidth ) * 100 ).toFixed(3);
+          if (leftMarginPct > (100 - ((sliderWidth / trackWidth) * 100))) { leftMarginPct = 100 - ((sliderWidth / trackWidth) * 100)};
+          if (leftMarginPct < 0) { leftMarginPct = 0 };
+          return leftMarginPct;
+        }
+
+        function getArrayItem (pct) {
+          var item = Math.round(( pct / (( 1 / (points.length)) * 100 ) )) - 1;
+          var image = document.getElementById('selected_image');
+          image.src = imageBase + points[item][2] ;
+
+          marker.setMap(null);
+          marker = new google.maps.Marker({
+            position: new google.maps.LatLng(points[item][0], points[item][1]),
+            map: map,
+            title: 'Picture Location' });
+
+
+          // var path_coords = [new google.maps.LatLng(points[0][0], points[0][1])];
+
+
+          // for (var i = 0; i < item; i++ ) {
+          //   path_coords.push( new google.maps.LatLng(points[i][0], points[i][1]));
+          // };
+
+          // path = new google.maps.Polyline({
+          //   path: path_coords,
+          //   map: map,
+          //   geodesic: true,
+          //   strokeColor: '#0033FF',
+          //   strokeOpacity: 1.0,
+          //   strokeWeight: 3
+          //   });
+
+          // path.setMap(map);
+
+
+          }
+
+        function startMove (event) {
+          leftMargin = getLeftMargin(event.clientX, track.offsetLeft,slider.offsetWidth, track.offsetWidth);
+          track.addEventListener('mousemove', continueMove);
+          slider.style.margin = "0px " + leftMargin  + "%";
+          getArrayItem(leftMargin);
+
+        }
+
+        function continueMove (event) {
+          leftMargin = getLeftMargin(event.clientX, track.offsetLeft,slider.offsetWidth, track.offsetWidth);
+          slider.style.margin = "0px " + leftMargin  + "%";
+          getArrayItem(leftMargin);
+        }
+
+        function endMove (event) {
+          leftMargin = getLeftMargin(event.clientX, track.offsetLeft,slider.offsetWidth, track.offsetWidth);
+          track.removeEventListener('mousemove', continueMove);
+          slider.style.margin = "0px " + leftMargin  + "%";
+          getArrayItem(leftMargin);
+        }
+    </script>
+
+
+  </head>
+
+  <body onload = "initialize()">
+    <div class = "header">&nbsp;&nbsp;timeline
+    <div class = "slider_container">
+      <div id = "track" >
+      <div id = "slider" ></div></div>
+    </div>
+    </div>
+    <div class = "body">
+
+    <%= yield %>
+    </div>
+  </body>
+</html>

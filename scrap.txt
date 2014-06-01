@@ -1,0 +1,55 @@
+<!-- <div id="SelectMap" style="float:left;display:inline-block;margin:10px;width:300px;height:500px;"></div>
+    <script src="OpenLayers.js"></script>
+    <script>
+
+        map = new OpenLayers.Map("SelectMap");
+        var mapnik         = new OpenLayers.Layer.OSM();
+        map.addLayer(mapnik);
+
+        var markers = new OpenLayers.Layer.Markers( "Markers" );
+        map.addLayer(markers);
+
+        var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+        var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
+
+        var lat            = <%= @points[@selected][0] %>;
+        var lon            = <%= @points[@selected][1] %>;
+        var position       = new OpenLayers.LonLat(lon, lat).transform( fromProjection, toProjection);
+
+        markers.addMarker(new OpenLayers.Marker(position));
+
+        map.setCenter(position, 10 );
+
+    </script>
+ -->
+
+
+<!-- <div id="OverallMap" style="margin:10px;height:300px;"></div>
+    <script src="OpenLayers.js"></script>
+    <script>
+
+        map = new OpenLayers.Map("OverallMap");
+        var mapnik         = new OpenLayers.Layer.OSM();
+        map.addLayer(mapnik);
+
+        var markers = new OpenLayers.Layer.Markers( "Markers" );
+        map.addLayer(markers);
+
+        var pointsToAdd = <%= @points%>;
+        var arrayLength = pointsToAdd.length;
+        var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+        var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
+
+        for (var i = 0; i < arrayLength; i++) {
+          if (i in pointsToAdd) {
+            var lat            = pointsToAdd[i][0];
+            var lon            = pointsToAdd[i][1];
+            var position       = new OpenLayers.LonLat(lon, lat).transform( fromProjection, toProjection);
+
+            markers.addMarker(new OpenLayers.Marker(position));
+          }
+        }
+        map.setCenter(position, 10 );
+
+    </script>
+ -->

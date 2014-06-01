@@ -1,0 +1,109 @@
+body {
+  background: url("background.jpg");
+  background-size: 600px 1000px;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+#track {
+  height:30px;
+  width:95%;
+  background:white;
+  margin:5px auto;
+  border-radius: 3px;
+}
+
+#slider {
+  margin: 0px 0px;
+  height:30px;
+  width:30px;
+  background:black;
+  border-radius: 3px;
+}
+
+
+.body {
+  width: 95%;
+  margin: 0px auto;
+  min-width: 1275px;
+}
+
+.header {
+  height: 60px;
+  background: rgba(255,0,0,.9);
+  font-family: Calisto MT;
+  font-weight: bolder;
+  font-size: 30pt;
+  border-radius: 3px;
+  color: white;
+  vertical-align: middle;
+  line-height: 70px;
+  margin: 10px;
+  min-width: 1275px;
+
+}
+
+.selected {
+  display: block;
+  height: 550px;
+  margin: 10px 10px;
+  min-width: 1110px;
+}
+
+.selected_map {
+  height: 100%;
+  width:42%;
+  display: inline-block;
+  border-radius: 5px;
+  float: left;
+}
+
+#map_canvas {
+  height: 94%;
+  display: block;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.8);
+}
+
+.slider_container {
+  height: 40px;
+  width: 80%;
+  background: red;
+  display: inline-block;
+  float: right;
+  margin:10px;
+  border-radius: 5px;
+  border: 2px solid white;
+}
+
+.slider {
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+
+
+}
+
+.selected_image_container {
+  margin: 0px 10px;
+  height: 110%;
+  max-width: 695px;
+  background: white;
+  display: inline-block;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.8);
+  border: 2px solid black;
+}
+
+.selected_image{
+  border-radius: 5px;
+  border: 2px solid black;
+  display: inline-block;
+  height:84.7%;
+  margin: 5px 5px;
+}
+
+
